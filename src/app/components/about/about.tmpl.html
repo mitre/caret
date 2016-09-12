@@ -1,0 +1,21 @@
+<md-dialog aria-label="About" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>About CARET - The <b>CAR</b> <b>E</b>xploration <b>T</b>ool</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.cancel()">
+          <md-icon style='fill:rgba(255,255,255,0.87);' aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content layout-padding style="max-width:800px; max-height:810px;">
+      <h3>Copyright Notices</h3>
+      <div ng-repeat="license in vm.licenses">
+        <h4>{{license.name}}</h4>
+        <pre>{{license.pre}}</pre>
+        <md-divider ng-if="!$last"></md-divider>
+      </div>  
+    </md-dialog-content>
+  </form>
+</md-dialog>

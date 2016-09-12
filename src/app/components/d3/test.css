@@ -1,0 +1,64 @@
+.link {
+  fill: none;
+  stroke-width: 1.5px;
+  opacity: 0.3;
+}
+
+.axis, .node {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.link.active {
+  stroke-width: 2px;
+  opacity: 1;
+}
+
+.link.selected {
+  stroke-width: 2px;
+  opacity: 1;
+}
+
+.link.unselected {
+  visibility: hidden;
+}
+
+.node.active {
+  stroke: red;
+  stroke-width: 2px;
+}
+
+.node.selected {
+  stroke-width: 2px;
+}
+
+.node.primary {
+  stroke: yellow;
+}
+
+.node-label.primary {
+}
+
+.node.unselected {
+  visibility: hidden;
+}
+
+.node-label.active:not(.selected) {
+  font-size: 8px;
+}
+
+.node-label.unselected {
+  visibility: hidden;
+}
+
+.node-label.invisible {
+  visibility: hidden;
+}
+
+.node.invisible {
+  visibility: hidden;
+}
+
+.button-label {
+  fill: white;
+}

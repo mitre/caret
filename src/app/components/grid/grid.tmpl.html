@@ -1,0 +1,85 @@
+<div layout="row" style="overflow-y: hidden"> 
+  <div flex="30">
+    <div flex layout='column' layout-padding >
+      <div flex layout='row' layout-wrap>
+        <md-switch flex='none' ng-model='main.gridLarge' aria-label="Switch 1">
+          Detailed grid
+        </md-switch>
+        <md-switch flex='none' ng-model='main.enableOutline' aria-label="Switch 2">
+          Enable outlines
+        </md-switch>
+      </div>
+      <md-chips flex ng-model="main.selectedGroups" md-autocomplete-snap md-require-match="true">
+        <md-autocomplete
+          md-selected-item="main.selectedGroup"
+          md-search-text="main.searchText"
+          md-items="group in main.groupSearch(main.searchText)"
+          md-item-text="group.displayName"
+          md-min-length="0"
+          placeholder="Select group"
+          md-menu-class="autocomplete-custom-template"
+          md-no-cache>
+          <md-item-template>
+            <span md-highlight-text="main.searchText" md-highlight-flags="^i">{{group.displayName}}</span>
+          </md-item-template>
+          <md-not-found>
+            No groups matching "{{main.searchText}}" were found.
+          </md-not-found>
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            {{$chip.displayName}}
+          </span>
+        </md-chip-template>
+      </md-chips>
+      <md-input-container flex>
+        <label>Search Analytics</label>
+        <input type="text" ng-model="main.filter">
+      </md-input-container>
+      <div flex layout='row' layout-wrap> 
+        <div flex='none'>
+          <md-button class="md-raised md-primary" ng-click="main.selectAll()">Select All</md-button>
+        </div>
+        <div flex='none'>
+          <md-button class="md-raised md-primary" ng-click="main.clearAll()">Clear All</md-button>
+        </div>
+      </div> 
+    </div>
+    <md-content flex style="height: 600px">
+      <md-list ng-cloak>
+        <md-list-item class="md-2-line" 
+            ng-repeat="analytic in main.analytics" 
+            ng-show="analytic.visible" 
+            ng-mouseenter="main.analyticMouseenter(analytic)"
+            ng-mouseleave="main.analyticMouseleave(analytic)">
+          <div class="md-list-item-text"> 
+            <p><strong class="" md-highlight-text="main.filter" md-highlight-flags="gi">{{analytic.shortName}}</strong></p>
+            <p md-highlight-text="main.filter" md-highlight-flags="gi">{{analytic.name}}</p>
+          </div>
+          <md-checkbox class="md-secondary" ng-model="analytic.active"></md-checkbox>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </div>
+  <div flex="70" style='top: 20px'>
+    <md-grid-list
+        md-cols="{{main.gridColumns}}"
+        md-row-height="{{main.gridRatio}}"
+        md-gutter="3px"
+        ng-style="main.gridStyle"
+        layout='column'>
+      <md-grid-tile
+          ng-repeat="tile in main.grid"
+          ng-class="[tile.background, tile.outline]"
+          ng-style="{ opacity: tile.opacity }"
+          md-colspan="1"
+          md-rowspan="1"
+          ng-click="main.showAdvanced($event, tile.name)">
+          <md-tooltip style='font-size:105%;' md-direction="left" md-delay='175' ng-show='!main.gridLarge'>
+            {{ tile.display_name }}
+          </md-tooltip>
+          <p class='text' style='font-size:85%;' align=center ng-show='main.gridLarge'>{{ tile.display_name }}</p>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>    
+</div>

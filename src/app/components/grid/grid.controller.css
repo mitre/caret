@@ -1,0 +1,45 @@
+.gray {
+  background: #f5f5f5; }
+.green {
+  background: #99ff9a; }
+.yellow {
+  background: #ffff8d; }
+.blue {
+  background: #84ffff; }
+.darkBlue {
+  background: #80d8ff; }
+.deepBlue {
+  background: #448aff; }
+.purple {
+  background: #b388ff; }
+.lightPurple {
+  background: #8c9eff; }
+.red {
+  background: #ff4a60; }
+.pink {
+  background: #ff80ab; }
+
+.text {
+ overflow: hidden;
+ text-overflow: ellipsis;
+ display: -webkit-box;
+ line-height: 16px;     /* fallback */
+ max-height: 32px;      /* fallback */
+ -webkit-line-clamp: 2; /* number of lines to show */
+ -webkit-box-orient: vertical;
+}
+
+.highlight {
+  background: #ffff8d;
+}
+
+.autocomplete-custom-template li {
+  border-bottom: 1px solid #ccc;
+}
+.autocomplete-custom-template li:last-child {
+  border-bottom-width: 0; 
+}
+
+.outline {
+  outline: 3px solid #3f51bf;
+}

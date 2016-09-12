@@ -1,0 +1,33 @@
+  <md-content>
+    <header>
+      <acme-navbar/>
+    </header>
+
+    <md-tabs md-dynamic-height>
+      <md-tab label="ATT&amp;CK Mapping">
+        <md-content>
+          <div ng-include="'app/components/grid/grid.tmpl.html'" ng-controller='GridController as main'></div>
+        </md-content>
+      </md-tab>
+      <md-tab label="Explore Relationships">
+        <md-content class="md-padding">
+          <div ng-controller='TestController as vm'>
+            <hive width="vm.width" 
+            height="vm.height" 
+            border="vm.border"
+            links="vm.links"
+            labels="vm.labels"
+            nodes="vm.nodes"></hive>
+          </div>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+
+    <div class="footer" layout='row'>
+      <div flex='70' flex-offset="15" layout-align="center center" layout="column"> 
+        <p>NOTICE</p>
+        <p>This software was produced for the U. S. Government under Contract No. W15P7T-13-C-A802, and is subject to the Rights in Noncommercial Computer Software and Noncommercial Computer Software Documentation Clause 252.227-7014 (FEB 2012) </p>
+        <p>© 2015-2016 The MITRE Corporation. All Rights Reserved</p>
+      </div>
+    </div>
+  </md-content>
