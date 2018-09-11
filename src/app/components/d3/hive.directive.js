@@ -293,7 +293,7 @@
       
       addButton(graph, toolbar, "A/\u2022", ".3em", _.partial(toggleNode, svg, graph));
       addButton(graph, toolbar, "\uE8C4", ".5em", _.partial(centerGraph, scalable, zoom), "1.5em", "Material Icons");
-      addButton(graph, toolbar, "\uE5D4", ".5em", _.partial(centerGraph, scalable, zoom), "1.5em", "Material Icons");
+      // addButton(graph, toolbar, "\uE5D4", ".5em", _.partial(centerGraph, scalable, zoom), "1.5em", "Material Icons");
 
       svg.on("click", function () {
         // prevent drags from triggering click handler

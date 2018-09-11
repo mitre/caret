@@ -1,3 +1,6 @@
 {
-  "directory": "bower_components"
+  "directory": "bower_components",
+  "proxy": "http://gatekeeper.mitre.org:80",
+  "https-proxy":"http://gatekeeper.mitre.org:80",
+  "ca": "C://cacert.pem"
 }

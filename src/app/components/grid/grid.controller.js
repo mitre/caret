@@ -9,7 +9,7 @@
   function GridController($scope, $timeout, $log, $mdDialog, $document, toastr, analyticLoader, _) {
     var vm = this;
     var defaultBackground = 'red';
-
+    vm.loading = true;
     vm.loadCAR = loadCAR;
     vm.analytics = [];
     vm.techniques = [];
@@ -32,10 +32,8 @@
     vm.enableOutline = true;
     vm.sensors = [];
 
-    var carHost = 'https://car-internal.mitre.org';
+    var carHost = 'https://car.mitre.org';
     var attackHost = '';
-    var attackPrefix = '/w';
-
 
     function analyticMouseenter (analytic) {
       if (!vm.enableOutline) {
@@ -88,6 +86,16 @@
     }, changedGroups, true);
 
     getAttackHost();
+
+    function getAttackHost() {
+      analyticLoader.getAttackFromCar(carHost)
+        .then(function (response) {
+          if(response) {
+            attackHost = response;
+            loadCAR();
+          }
+        });
+    }
 
     function selectAll() {
       angular.forEach(vm.analytics, function (analytic) {
@@ -164,8 +172,11 @@
 
     function buildDialogController(name) {
       return /** @ngInject */ function ($sce, $scope, $mdDialog) {
-        $scope.uri = $sce.trustAsResourceUrl(attackHost + '/wiki/Special:Search?search=' + encodeURIComponent(name));
-        $scope.name = name;
+        $scope.name = name;   
+        var temp = name.split("/");
+        name = temp[0].toLowerCase() + 's/' + temp[1];
+        $scope.uri = $sce.trustAsResourceUrl('http://attackdev.mitre.org/' + encodeURIComponent(name));
+        // $scope.uri = $sce.trustAsResourceUrl(attackHost + encodeURIComponent(name));
         $scope.hide = function() {
           $mdDialog.hide();
         };
@@ -250,39 +261,39 @@
       }
     }
 
-    function getAttackHost() {
-      analyticLoader.getAttackFromCar(carHost)
-        .then(function (response) {
-          attackHost = response + attackPrefix;
-          loadCAR();
-        });
-    }
-
-    function loadCAR() {
+    function loadCAR() {      
       analyticLoader.getAnalytics(carHost)
         .then(function (response) {
-          vm.analytics = _.map(response, function (r) { return angular.extend(r, {active: false, visible: true}); });
-          toastr.info('Loaded analytics');
+          if(response) {
+            vm.analytics = _.map(response, function (r) { return angular.extend(r, {active: false, visible: true}); });
+            toastr.info('Loaded analytics');
+          }
         });
         
-      analyticLoader.getTechniques(attackHost)
+      analyticLoader.getTechniques()
         .then(function (response) {
-          vm.techniques = _.map(response, function (r) { return angular.extend(r, {background: defaultBackground}); });
-          toastr.info('Loaded techniques');
-          vm.grid = produceGrid(vm.techniques, vm.gridLarge);
+          if(response) {
+            vm.techniques = _.map(response, function (r) { return angular.extend(r, {background: defaultBackground}); });
+            vm.grid = produceGrid(vm.techniques, vm.gridLarge);
+            toastr.info('Loaded techniques');
+          }
         });
 
-      analyticLoader.getGroups(attackHost)
+      analyticLoader.getGroups()
         .then(function (response) {
-          vm.groups = _.map(response, function (r) { return angular.extend(r, {active: false, displayName: groupDisplayName(r)}); });
-          vm.unselectedGroups = vm.groups;
-          toastr.info('Loaded groups');
+          if(response) {
+            vm.groups = _.map(response, function (r) { return angular.extend(r, {active: false, displayName: groupDisplayName(r)}); });
+            vm.unselectedGroups = vm.groups;
+            toastr.info('Loaded groups');
+          }
         });
 
       analyticLoader.getSensors(carHost)
         .then(function (response) {
-          vm.sensors = response;
-          toastr.info('Loaded sensors');
+          if(response) {
+            vm.sensors = response;
+            toastr.info('Loaded sensors');
+          }
         });
     }
 
@@ -310,6 +321,15 @@
         }
         col.techniques.push(technique);
       });
+
+      //Sort columns in the order: Initial Access, Execution, Persistence, Privilege Escalation, Defense Evasion, Credential Access, Discovery, Lateral Movement, Collection, Exfiltration, Command And Control
+      if(columns.length > 0) {
+        columns = _.map(['Initial Access', 'Execution', 'Persistence', 'Privilege Escalation', 'Defense Evasion', 'Credential Access', 'Discovery', 'Lateral Movement', 'Collection', 'Exfiltration', 'Command And Control'], function (i) { 
+          var index = _.findIndex(columns, {'name': i});
+          return columns[index]; 
+        });
+      }    
+      
       var linearized = [];
       var longestLength = 0;
       angular.forEach(columns, function (col) {
@@ -333,6 +353,11 @@
           }
         }
       }
+
+      if(linearized.length > 0) {
+        vm.loading = false;
+      }
+
       return linearized;
     }
 

@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "dependencies": {
     "angular-animate": "~1.4.0",
+    "angular-aria": "~1.4.0",
     "angular-cookies": "~1.4.0",
     "angular-sanitize": "~1.4.0",
     "jquery": "~2.1.4",
     "angular-route": "~1.4.0",
     "angular-material": "1.1.1",
+    "angular-messages": "~1.4.0",
     "toastr": "~2.1.1",
     "angular": "~1.4.0",
     "lodash": "~4.11.0",
