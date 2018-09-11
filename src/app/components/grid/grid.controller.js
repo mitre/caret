@@ -175,8 +175,7 @@
         $scope.name = name;   
         var temp = name.split("/");
         name = temp[0].toLowerCase() + 's/' + temp[1];
-        $scope.uri = $sce.trustAsResourceUrl('http://attackdev.mitre.org/' + encodeURIComponent(name));
-        // $scope.uri = $sce.trustAsResourceUrl(attackHost + encodeURIComponent(name));
+        $scope.uri = $sce.trustAsResourceUrl(attackHost + encodeURIComponent(name));
         $scope.hide = function() {
           $mdDialog.hide();
         };
