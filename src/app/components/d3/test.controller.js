@@ -17,6 +17,7 @@
       vm.height = $window.innerHeight - 200;
       vm.width = $window.innerWidth - 35;
     }
+    
     windowSize();
     angular.element($window).bind('resize', windowSize);
 
@@ -24,24 +25,14 @@
     vm.links = [];
     vm.labels = [];
 
-    var carHost = 'https://car-internal.mitre.org';
-    var attackHost = '';
-    var attackPrefix = '/w';
+    var carHost = 'https://car.mitre.org';
     var analytics = [];
     var techniques = [];
     var groups = [];
     var sensors = [];
     var dataModel = [];
 
-    getAttackHost();
-
-    function getAttackHost() {
-      analyticLoader.getAttackFromCar(carHost)
-        .then(function (response) {
-          attackHost = response + attackPrefix;
-          loadCAR();
-        });
-    }
+    loadCAR();
 
     function loadCAR() {
       analyticLoader.getAnalytics(carHost)
@@ -49,7 +40,8 @@
           analytics = response;
           buildLinksAndNodes();
         });
-      analyticLoader.getTechniques(attackHost)
+      
+      analyticLoader.getTechniques()
         .then(function (response) {
           _.map(response, function (technique) {
             angular.forEach(technique.tactics, function (tactic) {
@@ -62,7 +54,7 @@
           buildLinksAndNodes();
         });
 
-      analyticLoader.getGroups(attackHost)
+      analyticLoader.getGroups()
         .then(function (response) {
           groups = response;
           buildLinksAndNodes();
@@ -109,6 +101,7 @@
           angular.extend(l[i], {node: node});
         }
       }
+      
       buildNode(groups, 0, function (g) { return g.aliases.join(', ');});
       buildNode(techniques, 1, function (t) { return t.tactic + '/' + t.display_name; });
       buildNode(analytics, 2, function (a) { return a.shortName; });

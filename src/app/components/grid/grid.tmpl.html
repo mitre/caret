@@ -16,7 +16,7 @@
           md-items="group in main.groupSearch(main.searchText)"
           md-item-text="group.displayName"
           md-min-length="0"
-          placeholder="Select group"
+          placeholder="Select Group"
           md-menu-class="autocomplete-custom-template"
           md-no-cache>
           <md-item-template>
@@ -36,15 +36,19 @@
         <label>Search Analytics</label>
         <input type="text" ng-model="main.filter">
       </md-input-container>
-      <div flex layout='row' layout-wrap> 
-        <div flex='none'>
-          <md-button class="md-raised md-primary" ng-click="main.selectAll()">Select All</md-button>
-        </div>
-        <div flex='none'>
-          <md-button class="md-raised md-primary" ng-click="main.clearAll()">Clear All</md-button>
+      <div flex layout='row' layout-wrap>
+        <h2 style="margin: 5px 0; font-weight: inherit">Analytics</h2>
+        <div style="display: flex; text-align: right; float: right; margin-left: auto">
+          <div flex='none'>
+            <md-button class="md-raised md-primary" ng-click="main.selectAll()">Select All</md-button>
+          </div>
+          <div flex='none'>
+            <md-button class="md-raised md-primary" ng-click="main.clearAll()">Clear All</md-button>
+          </div>
         </div>
       </div> 
     </div>
+    <hr style="background-color: #DCDCDC; height: 1px; border: 0; margin: 0 20px 0 15px" />
     <md-content flex style="height: 600px">
       <md-list ng-cloak>
         <md-list-item class="md-2-line" 
@@ -62,6 +66,12 @@
     </md-content>
   </div>
   <div flex="70" style='top: 20px'>
+    <div ng-if="main.loading">
+      <!-- <div class="lds-facebook" style="display: inline-block; position: relative; margin: 20% 0 0 43%; width: 64px; height: 64px;">
+        <div></div><div></div><div></div>
+      </div> -->
+      <div style="display: inline-block; position: relative; margin: 20% 0 0 43%; width: 64px; height: 64px; font-size: x-large;">Loading...</div>
+    </div>
     <md-grid-list
         md-cols="{{main.gridColumns}}"
         md-row-height="{{main.gridRatio}}"
@@ -78,7 +88,7 @@
           <md-tooltip style='font-size:105%;' md-direction="left" md-delay='175' ng-show='!main.gridLarge'>
             {{ tile.display_name }}
           </md-tooltip>
-          <p class='text' style='font-size:85%;' align=center ng-show='main.gridLarge'>{{ tile.display_name }}</p>
+          <p class='text' style='font-size:85%; cursor:pointer' align=center ng-show='main.gridLarge'>{{ tile.display_name }}</p>
       </md-grid-tile>
     </md-grid-list>
   </div>    

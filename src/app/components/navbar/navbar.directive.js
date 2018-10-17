@@ -35,37 +35,30 @@
 
       vm.downloadURL = "";
       downloadData();
+      
       function downloadData () {
         var carHost = 'https://car.mitre.org';
-        var attackHost = '';
         var analytics = [];
         var techniques = [];
         var groups = [];
         var sensors = [];
         var dataModel = [];
 
-        getAttackHost();
-
-        function getAttackHost() {
-          analyticLoader.getAttackFromCar(carHost)
-            .then(function (response) {
-              attackHost = response;
-              loadCAR();
-            });
-        }
+        loadCAR();
 
         function loadCAR() {
           var all = [];
+
           all.push(analyticLoader.getAnalytics(carHost)
             .then(function (response) {
               analytics = response;
             }));
-          all.push(analyticLoader.getTechniques(attackHost)
+          all.push(analyticLoader.getTechniques()
             .then(function (response) {
               techniques = response;
             }));
 
-          all.push(analyticLoader.getGroups(attackHost)
+          all.push(analyticLoader.getGroups()
             .then(function (response) {
               groups = response;
             }));
@@ -88,8 +81,5 @@
         }
       }
     }
-
-
   }
-
 })();
