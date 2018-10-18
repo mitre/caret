@@ -176,7 +176,7 @@
         var temp = name.split("/");
         name = temp[0].toLowerCase() + 's/' + temp[1];
         console.log(attackHost, name)
-        $scope.uri = $sce.trustAsResourceUrl(attackHost + "/techniques/"  + encodeURIComponent(name.split('/')[1]));
+        $scope.uri = $sce.trustAsResourceUrl(attackHost + "/wiki/Technique/"  + encodeURIComponent(name.split('/')[1]));
         $scope.hide = function() {
           $mdDialog.hide();
         };

@@ -106,7 +106,7 @@ section.jumbotron h1 {
   width: 50px;
 }
 
-#-----Loader-Spinner------
+/* -----Loader-Spinner------ */
 .lds-facebook {
   display: inline-block;
   position: relative;
