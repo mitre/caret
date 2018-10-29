@@ -39,11 +39,11 @@
       if (!vm.enableOutline) {
         return;
       }
-      
+
       angular.forEach(analytic.attack, function (technique) {
         var name = technique.technique;
         angular.forEach(technique.tactics, function (tactic) {
-          //find the technique 
+          //find the technique
           var techObject = _.find(vm.grid, {name: name, tactic: tactic});
           if (techObject !== undefined) {
             techObject.outline = 'outline';
@@ -60,7 +60,7 @@
       angular.forEach(analytic.attack, function (technique) {
         var name = technique.technique;
         angular.forEach(technique.tactics, function (tactic) {
-          //find the technique 
+          //find the technique
           var techObject = _.find(vm.grid, {name: name, tactic: tactic});
           if (techObject !== undefined) {
             techObject.outline = '';
@@ -172,10 +172,10 @@
 
     function buildDialogController(name) {
       return /** @ngInject */ function ($sce, $scope, $mdDialog) {
-        $scope.name = name;   
+        $scope.name = name;
         var temp = name.split("/");
         name = temp[0].toLowerCase() + 's/' + temp[1];
-        $scope.uri = $sce.trustAsResourceUrl(attackHost + encodeURIComponent(name));
+        $scope.uri = $sce.trustAsResourceUrl(attackHost + '/' + encodeURIComponent(name));
         $scope.hide = function() {
           $mdDialog.hide();
         };
@@ -207,7 +207,7 @@
       // compute analytic coverage
       var actives = _.filter(newValue, 'active');
       //reset the background of all techniques
-      angular.forEach(vm.grid, function (technique) { 
+      angular.forEach(vm.grid, function (technique) {
         technique.background = technique.defaultBackground;
       });
       angular.forEach(actives, function (active) {
@@ -215,7 +215,7 @@
           var name = technique.technique;
           var coverage = technique.coverage;
           angular.forEach(technique.tactics, function (tactic) {
-            //find the technique 
+            //find the technique
             var techObject = _.find(vm.grid, {name: name, tactic: tactic});
             if (techObject !== undefined) {
               if ((techObject.background === 'red' && (coverage === 'Partial' || coverage === 'Complete' )) ||
@@ -231,7 +231,7 @@
     }
 
     function changedFilter(newValue) {
-      // take the filter value and update 
+      // take the filter value and update
       newValue = newValue.toLowerCase();
       var selectedGroupsTechniques;
       if (vm.selectedGroups.length !== 0) {
@@ -260,7 +260,7 @@
       }
     }
 
-    function loadCAR() {      
+    function loadCAR() {
       analyticLoader.getAnalytics(carHost)
         .then(function (response) {
           if(response) {
@@ -268,7 +268,7 @@
             toastr.info('Loaded analytics');
           }
         });
-        
+
       analyticLoader.getTechniques()
         .then(function (response) {
           if(response) {
@@ -323,12 +323,12 @@
 
       //Sort columns in the order: Initial Access, Execution, Persistence, Privilege Escalation, Defense Evasion, Credential Access, Discovery, Lateral Movement, Collection, Exfiltration, Command And Control
       if(columns.length > 0) {
-        columns = _.map(['Initial Access', 'Execution', 'Persistence', 'Privilege Escalation', 'Defense Evasion', 'Credential Access', 'Discovery', 'Lateral Movement', 'Collection', 'Exfiltration', 'Command And Control'], function (i) { 
+        columns = _.map(['Initial Access', 'Execution', 'Persistence', 'Privilege Escalation', 'Defense Evasion', 'Credential Access', 'Discovery', 'Lateral Movement', 'Collection', 'Exfiltration', 'Command And Control'], function (i) {
           var index = _.findIndex(columns, {'name': i});
-          return columns[index]; 
+          return columns[index];
         });
-      }    
-      
+      }
+
       var linearized = [];
       var longestLength = 0;
       angular.forEach(columns, function (col) {
@@ -340,7 +340,7 @@
           linearized.push({display_name: col.name, background: 'white', defaultBackground: "white"});
         });
       }
-     
+
       vm.gridColumns = columns.length;
 
       for (var i=0; i < longestLength; i++) {
