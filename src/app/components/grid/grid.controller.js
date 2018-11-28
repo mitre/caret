@@ -33,7 +33,7 @@
     vm.sensors = [];
 
     var carHost = 'https://car.mitre.org';
-    var attackHost = '';
+    var attackHost = 'https://attack.mitre.org';
 
     function analyticMouseenter (analytic) {
       if (!vm.enableOutline) {
@@ -85,17 +85,7 @@
       return vm.selectedGroups;
     }, changedGroups, true);
 
-    getAttackHost();
-
-    function getAttackHost() {
-      analyticLoader.getAttackFromCar(carHost)
-        .then(function (response) {
-          if(response) {
-            attackHost = response;
-            loadCAR();
-          }
-        });
-    }
+    loadCAR()
 
     function selectAll() {
       angular.forEach(vm.analytics, function (analytic) {
@@ -175,7 +165,6 @@
         $scope.name = name;   
         var temp = name.split("/");
         name = temp[0].toLowerCase() + 's/' + temp[1];
-        console.log(attackHost, name)
         $scope.uri = $sce.trustAsResourceUrl(attackHost + "/techniques/"  + encodeURIComponent(name.split('/')[1]) + '/');
         $scope.hide = function() {
           $mdDialog.hide();
